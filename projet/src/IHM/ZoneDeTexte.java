@@ -8,7 +8,7 @@ public class ZoneDeTexte
 {
 	private Integer debut;
 	
-	private Integer longueur;
+	private Integer fin;
 	
 	private char lastChar;
 	
@@ -19,9 +19,9 @@ public class ZoneDeTexte
 		return debut;
 	}
 	
-	public Integer getLongueur( )
+	public Integer getFin( )
 	{
-		return longueur;
+		return fin;
 	}
 	
 	public char getDerChar( )
@@ -44,5 +44,12 @@ public class ZoneDeTexte
 		
 	}
 	
+	public void setDebut(int deb){
+		debut = deb;
+	}
+	
+	public void setFin(int fin){
+		this.fin = fin;
+	}	
 	
 }

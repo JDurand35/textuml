@@ -10,11 +10,11 @@ public interface Editeur
 	
 	void coller( );
 	
-	void ecrire( );
+	void ecrire(String s);
 	
-	void effacer( );
+	void couper( );
 	
-	void selectionner( );
+	void selectionner(int debut, int fin);
 	
 	String getTexte( );
 	

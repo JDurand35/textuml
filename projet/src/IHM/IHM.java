@@ -10,17 +10,17 @@ public interface IHM
 {
 	void setZDT( Integer int1, Integer int2 );
 	
-	void setBouton( String string, Action action );
+	void addBouton( String string, Action action );
 	
 	void setBoutons( );
 	
 	char getDerChar( );
 	
-	void display( );
+	String getTexte( );
 	
 	Integer getDebut( );
 	
-	Integer getLongueur( );
+	Integer getFin( );
 	
 	
 }

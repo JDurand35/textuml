@@ -24,5 +24,17 @@ public class PressePapier
 		texte.append(newContenu);
 	}
 	
-	
+	public String couper( Selection selection ){
+		int debut = selection.getDebut();
+		int fin = selection.getFin();
+		if(debut > texte.length()-1){
+			debut=texte.length()-1;
+		}
+		if(fin > texte.length()-1){
+			fin=texte.length()-1;
+		}
+		
+		texte.delete(debut, fin);
+		return texte.substring(debut,fin);	
+	}
 }

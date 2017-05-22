@@ -20,38 +20,33 @@ public class EditeurImpl implements Editeur
 
 	@Override
 	public void copier() {
-		// TODO Auto-generated method stub
-		
+		pressePapier.setContenu(buffer.getContenu(selection));
 	}
 
 	@Override
 	public void coller() {
-		// TODO Auto-generated method stub
+		buffer.ecrire(pressePapier.getContenu(), selection);		
+	}
+
+	@Override
+	public void ecrire(String s) {
+		buffer.ecrire(s, selection);
 		
 	}
 
 	@Override
-	public void ecrire() {
-		// TODO Auto-generated method stub
-		
+	public void couper() {
+		pressePapier.setContenu(buffer.getContenu(selection));	
 	}
 
 	@Override
-	public void effacer() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void selectionner() {
-		// TODO Auto-generated method stub
-		
+	public void selectionner(int debut, int fin) {
+		selection.setSelection(debut, fin);		
 	}
 
 	@Override
 	public String getTexte() {
-		// TODO Auto-generated method stub
-		return null;
+		return buffer.toString();
 	}
 	
 }
