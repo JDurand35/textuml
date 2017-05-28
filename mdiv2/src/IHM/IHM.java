@@ -22,5 +22,5 @@ public interface IHM
 	
 	Integer getFin( );
 	
-	
+	public String getNewLine();
 }

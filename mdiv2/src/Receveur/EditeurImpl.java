@@ -21,11 +21,13 @@ public class EditeurImpl implements Editeur
 	@Override
 	public void copier() {
 		pressePapier.setContenu(buffer.getContenu(selection));
+		
 	}
 
 	@Override
 	public void coller() {
-		buffer.ecrire(pressePapier.getContenu(), selection);		
+		buffer.ecrire(pressePapier.getContenu(), selection);
+
 	}
 
 	@Override
@@ -34,8 +36,9 @@ public class EditeurImpl implements Editeur
 	}
 
 	@Override
-	public void couper() {
+	public void couper(String s) {
 		pressePapier.setContenu(buffer.getContenu(selection));	
+		buffer.ecraser(s);
 	}
 
 	@Override

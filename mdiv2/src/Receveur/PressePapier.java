@@ -15,11 +15,13 @@ public class PressePapier
 	
 	public String getContenu( )
 	{
+		System.out.println("presse papier get :"+texte.toString());
 		return texte.toString();
 	}
 	
 	public void setContenu( String newContenu )
 	{
+		System.out.println("presse papier set :"+texte.toString());
 		texte.delete(0, texte.length());
 		texte.append(newContenu);
 	}

@@ -12,7 +12,7 @@ public interface Editeur
 	
 	void ecrire(String s);
 	
-	void couper( );
+	void couper(String s);
 	
 	void selectionner(int debut, int fin);
 	

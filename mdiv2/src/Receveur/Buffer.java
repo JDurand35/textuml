@@ -24,6 +24,7 @@ public class Buffer
 		if(fin > texte.length()-1){
 			fin=texte.length()-1;
 		}
+		System.out.println("copier buffer : "+texte.substring(debut,fin));
 		return texte.substring(debut,fin);		
 	}
 	
@@ -41,7 +42,8 @@ public class Buffer
 			texte.append(s);
 		}else{
 			texte.replace(debut, fin,s);
-		}	
+		}
+		System.out.println("buffer ecrire " + texte);
 	}
 	
 	public StringBuffer getTexte( )

@@ -29,10 +29,12 @@ public class IHMimpl extends JFrame implements IHM
 	private HashMap<String, Action> actions;
 	private ZoneDeTexte ZoneDeTexte;
 	JTextArea txt = new JTextArea();
+	String newLine;
 	
 	public IHMimpl() {
 		super("Editeur de texte");
 		
+		this.newLine="";
 		this.setSize(700,500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -168,7 +170,7 @@ public class IHMimpl extends JFrame implements IHM
 					+ "4: Couper\n"
 					+ "5: Bouger curseur\n"
 					+ "-1: Quitter l'application\n"
-					+ "Votre choix? SELECTIONNER d'un numero.";
+					+ "Votre choix? Selectionner un numero.";
 			System.out.println(menu);
 
 			try {
@@ -179,15 +181,44 @@ public class IHMimpl extends JFrame implements IHM
 
 			switch (choix) {
 			case 1:
+				try {
+					newLine = sc.next();
+				} catch (Exception e) {
+					newLine = "";
+				}
+				String s = ZoneDeTexte.getTexte();
+				String res = "";
+				for(int i = 0; i<ZoneDeTexte.getDebut(); i++){
+					res+=s.charAt(i);
+				}
+				res+=newLine;
+				for(int i = ZoneDeTexte.getFin(); i<s.length(); i++ ){
+					res+=s.charAt(i);
+				}
+				ZoneDeTexte.setTexte(res);
 				execAction(Client.ECRIRE);
+				newLine="";
+				System.out.println("ihm : ecrire" + ZoneDeTexte.getTexte());
 				break;
 			case 2:
 				execAction(Client.COLLER);
+				System.out.println("ZDT COLLER : "+ZoneDeTexte.getTexte());
 				break;
 			case 3:
-				execAction(Client.COPIER);
+				System.out.println("ZDT COPIER : "+ZoneDeTexte.getTexte());
+				execAction(Client.COPIER);				
 				break;
 			case 4:
+				String s1 = ZoneDeTexte.getTexte();
+				String res1 = "";
+				for(int i = 0; i<ZoneDeTexte.getDebut(); i++){
+					res1+=s1.charAt(i);
+				}
+				for(int i = ZoneDeTexte.getFin(); i<s1.length(); i++ ){
+					res1+=s1.charAt(i);
+				}
+				ZoneDeTexte.setTexte(res1);
+				System.out.println("ZDT COUPER : "+ZoneDeTexte.getTexte());
 				execAction(Client.COUPER);
 				break;
 			case 5:
@@ -198,7 +229,7 @@ public class IHMimpl extends JFrame implements IHM
 					ZoneDeTexte.setFin(sc.nextInt());
 
 				} catch (Exception e) {
-					System.out.println("Parametre incorrect.");
+					System.out.println("Parametre incorrect, selection remise à (0,0).");
 					ZoneDeTexte.setDebut(0);
 					ZoneDeTexte.setFin(0);
 					break;
@@ -210,6 +241,7 @@ public class IHMimpl extends JFrame implements IHM
 				break;
 			default:
 				System.out.println("Action incorrecte.");
+				end=true;
 				break;
 			}
 		}
@@ -250,6 +282,10 @@ public class IHMimpl extends JFrame implements IHM
 	public void setBoutons() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public String getNewLine(){
+		return this.newLine;
 	}
 	
 }

@@ -38,7 +38,7 @@ public class Client
 		
 		ihm.addBouton(COLLER, new Coller(editeur));
 		ihm.addBouton(COPIER, new Copier(editeur));
-		ihm.addBouton(COUPER, new Couper(editeur));
+		ihm.addBouton(COUPER, new Couper(editeur,ihm));
 		ihm.addBouton(ECRIRE, new Ecrire(editeur, ihm));
 		ihm.addBouton(SELECTIONNER, new Selectionner(editeur, ihm));
 		
@@ -46,7 +46,7 @@ public class Client
 		ihm.addBouton(REDO, new RedoActions(undo));
 		ihm.addBouton(ADDUNDO, new AddUndo(undo, ihm));
 		
-		//ihm.run();
+		ihm.run();
 	}
 	
 }
