@@ -8,10 +8,9 @@ import Receveur.Editeur;
 import Receveur.EditeurImpl;
 import Undo.Undo;
 
-import java.util.HashMap;
+import java.io.IOException;
 
 import Actions.*;
-import IHM.IHM;
 import IHM.IHMimpl;
 
 public class Client
@@ -29,14 +28,13 @@ public class Client
 	private static Editeur editeur;
 	private static IHMimpl ihm;
 	private static Undo undo;
-	private Action actions;
 		
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		editeur = new EditeurImpl();
 		ihm = new IHMimpl();
 		undo = new Undo(editeur,ihm);
 		
-		ihm.addBouton(COLLER, new Coller(editeur));
+		ihm.addBouton(COLLER, new Coller(editeur, ihm));
 		ihm.addBouton(COPIER, new Copier(editeur));
 		ihm.addBouton(COUPER, new Couper(editeur,ihm));
 		ihm.addBouton(ECRIRE, new Ecrire(editeur, ihm));
@@ -46,7 +44,7 @@ public class Client
 		ihm.addBouton(REDO, new RedoActions(undo));
 		ihm.addBouton(ADDUNDO, new AddUndo(undo, ihm));
 		
-		ihm.run();
+		ihm.runConsole();
 	}
 	
 }

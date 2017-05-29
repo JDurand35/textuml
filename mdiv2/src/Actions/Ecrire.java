@@ -20,12 +20,7 @@ public class Ecrire implements Action
 	@Override
 	public void execute( )
 	{
-		if(ihm.getNewLine()!=""){
-			editeur.ecrire(ihm.getNewLine());
-			
-		}else{
-			editeur.ecrire(ihm.getTexte());
-		}
+		editeur.ecrire(ihm.getTexte());
 	}
 	
 }

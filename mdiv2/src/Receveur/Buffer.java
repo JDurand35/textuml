@@ -6,7 +6,7 @@ package Receveur;
 
 public class Buffer
 {
-	private final int capacity = 500;
+	private final int capacity = 400;
 	
 	private StringBuffer texte;
 	
@@ -18,12 +18,10 @@ public class Buffer
 	{
 		int debut = selection.getDebut();
 		int fin = selection.getFin();
-		if(debut > texte.length()-1){
-			debut=texte.length()-1;
-		}
-		if(fin > texte.length()-1){
-			fin=texte.length()-1;
-		}
+		
+		debut = (debut > texte.length()-1) ? texte.length()-1 : debut;
+		fin = (fin > texte.length()-1) ? texte.length()-1 : fin;
+
 		System.out.println("copier buffer : "+texte.substring(debut,fin));
 		return texte.substring(debut,fin);		
 	}
@@ -32,12 +30,8 @@ public class Buffer
 	{		
 		int debut = selection.getDebut();
 		int fin = selection.getFin();
-		if(debut > texte.length()-1){
-			debut=texte.length()-1;
-		}
-		if(fin > texte.length()-1){
-			fin=texte.length()-1;
-		}
+		debut = (debut > texte.length()-1) ? texte.length()-1 : debut;
+		fin = (fin > texte.length()-1) ? texte.length()-1 : fin;
 		if(texte.length()==0){
 			texte.append(s);
 		}else{
@@ -49,10 +43,6 @@ public class Buffer
 	public StringBuffer getTexte( )
 	{
 		return texte;
-	}
-	
-	public void ecraser(String newText){
-		texte.replace(0, texte.length(), newText);
 	}
 	
 }

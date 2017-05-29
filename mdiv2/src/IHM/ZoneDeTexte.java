@@ -22,11 +22,6 @@ public class ZoneDeTexte
 		return fin;
 	}
 	
-	public char getDerChar( )
-	{
-		return textAff.charAt(textAff.length()-1); //a voir
-	}
-	
 	public String getTexte( )
 	{
 		return textAff;
@@ -35,11 +30,6 @@ public class ZoneDeTexte
 	public void setTexte( String string )
 	{
 		this.textAff=string;
-	}
-	
-	public void refresh( String string, Integer int1, Integer int2 )
-	{
-		
 	}
 	
 	public void setDebut(int deb){

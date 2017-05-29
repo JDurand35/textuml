@@ -1,6 +1,6 @@
 package Memento;
 
-public class MementoUndo implements Memento {
+public class MementoUndo{
 	private String texte;
 
 	public MementoUndo(String newTexte){

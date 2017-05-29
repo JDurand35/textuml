@@ -3,7 +3,6 @@
  */
 
 package Actions;
-
 import Receveur.Editeur;
 
 public class Copier implements Action

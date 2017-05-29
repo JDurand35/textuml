@@ -29,6 +29,7 @@ public class Undo {
 		String newText=version.get(current).getTexte();
 		System.out.println("update "+newText);
 		ihm.setText(newText);
+		ihm.setZDT(newText);
 		System.out.println(ihm.getTexte());
 		editeur.setContent(newText);
 	}

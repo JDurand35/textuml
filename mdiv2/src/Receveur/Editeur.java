@@ -4,11 +4,13 @@
 
 package Receveur;
 
+import IHM.IHM;
+
 public interface Editeur
 {
 	void copier( );
 	
-	void coller( );
+	void coller(IHM ihm);
 	
 	void ecrire(String s);
 	
