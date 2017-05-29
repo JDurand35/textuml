@@ -16,9 +16,12 @@ public interface Editeur
 	
 	void couper(String s);
 	
+	// Change la selection
 	void selectionner(int debut, int fin);
 	
+	//Récupère le contenue du buffer
 	String getTexte( );
 	
+	//Modifie le contenu du buffer
 	void setContent(String s);
 }

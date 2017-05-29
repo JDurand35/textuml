@@ -19,4 +19,6 @@ public interface IHM
 	Integer getFin( );
 	
 	void setZDT(String s);
+	
+	void run();
 }

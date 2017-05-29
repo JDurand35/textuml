@@ -30,5 +30,4 @@ public class Selection
 		this.debut = Math.min(newDebut, newFin);
 		this.fin = Math.max(newDebut, newFin);
 	}	
-	
 }

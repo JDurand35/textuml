@@ -10,9 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,30 +33,40 @@ public class IHMimpl extends JFrame implements IHM
 {	
 	private HashMap<String, Action> actions;
 	private ZoneDeTexte ZoneDeTexte;
+	JTextArea txt = new JTextArea();
 	
-	public IHMimpl() {
+	public IHMimpl() throws IOException {
 		super("Editeur de texte");
 		
-		this.setSize(700,500);
+		this.setSize(1000,800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		//IHM possede une Zone de texte vide au debut
+		//Une selection a 0
+		//Une liste d action
 		this.ZoneDeTexte = new ZoneDeTexte();
 		ZoneDeTexte.setDebut(0);
 		ZoneDeTexte.setFin(0);
 		this.actions = new HashMap<String,Action>();
 		
 		JPanel container = new JPanel(new BorderLayout());
-		JPanel menu = new JPanel(new FlowLayout());		
-		JButton copier = new JButton("Copier");
-		JButton coller = new JButton("Coller");
-		JButton couper = new JButton("Couper");
-		JTextArea txt = new JTextArea();
+		JPanel menu = new JPanel(new FlowLayout());	
+		
+		//Creation des icones a partir d image
+		BufferedImage copyIcon = ImageIO.read(new File(".\\src\\Copy.png"));
+		BufferedImage pastIcon = ImageIO.read(new File(".\\src\\Col.jpg"));
+		BufferedImage cutIcon = ImageIO.read(new File(".\\src\\Cut.png"));
+		
+		//Creation des boutons a partir des icones
+		JButton copier = new JButton(new ImageIcon(copyIcon));
+		JButton coller = new JButton(new ImageIcon(pastIcon));
+		JButton couper = new JButton(new ImageIcon(cutIcon));
 	    
+		//On ajoute des actions sur nos boutons	
 		copier.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				execAction(Client.COPIER);			
-				// Gestion visuelle de l'IHM
 				txt.copy();
 			}		
 		});
@@ -60,7 +75,6 @@ public class IHMimpl extends JFrame implements IHM
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				execAction(Client.COLLER);				
-				// Gestion visuelle de l'IHM
 				txt.paste();
 				
 				ZoneDeTexte.setTexte(txt.getText());
@@ -71,16 +85,17 @@ public class IHMimpl extends JFrame implements IHM
 		couper.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				execAction(Client.COUPER);				
-				// Gestion visuelle de l'IHM
+				execAction(Client.COUPER);	
 				txt.cut();
 			}		
 		});
 		
+		//On ajoute les boutons
 		menu.add(copier);
 		menu.add(coller);
 		menu.add(couper);
 		
+		//Permet de capturer le curseur
 		txt.addCaretListener(new CaretListener(){
 			@Override
 			public void caretUpdate(CaretEvent e) {
@@ -91,17 +106,18 @@ public class IHMimpl extends JFrame implements IHM
 			}
 		});
 		
+		//Permet de capturer les touches claviers
 		txt.addKeyListener(new KeyListener(){
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+				ZoneDeTexte.setTexte(txt.getText());	
+				execAction(Client.ECRIRE);
 			}
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				ZoneDeTexte.setTexte(txt.getText());	
-				execAction(Client.ECRIRE);
+				
 			}
 
 			@Override
@@ -116,81 +132,18 @@ public class IHMimpl extends JFrame implements IHM
 		container.add(menu, BorderLayout.NORTH);
 		container.add(scrollTxt, BorderLayout.CENTER);
 	    this.setContentPane(container);
-	    
-		setVisible(true);
 	}
 
-	public void execAction(String act) {
+	//Permet de lancer les actions
+	private void execAction(String act) {
 		actions.get(act).execute();
 	}
 	
+	/**
+	 * Méthode permettant d'utiliser l'editeur dans la console
+	 */
 	public void run() {
-		Scanner sc = new Scanner(System.in);
-		int choix = 0;
-		boolean end = false;
-
-		while(!end) {
-			String menu = "Etat actuel du systeme:\n"
-					+ "Position du curseur: [" + ZoneDeTexte.getDebut() + "," + ZoneDeTexte.getFin() + "]\n\n"
-					+ "Liste des commandes disponibles:\n"
-					+ "1: Ecrire\n"
-					+ "2: Coller\n"
-					+ "3: Copier\n"
-					+ "4: Couper\n"
-					+ "5: Bouger curseur\n"
-					+ "-1: Quitter l'application\n"
-					+ "Votre choix? SELECTIONNER d'un numero.";
-			System.out.println(menu);
-
-			try {
-				choix = sc.nextInt();
-			} catch (Exception e) {
-				choix = -99;
-			} 
-
-			switch (choix) {
-			case 1:
-				execAction(Client.ECRIRE);
-				break;
-			case 2:
-				execAction(Client.COLLER);
-				break;
-			case 3:
-				execAction(Client.COPIER);
-				break;
-			case 4:
-				execAction(Client.COUPER);
-				break;
-			case 5:
-				try {
-					System.out.println("Debut de la selection: ");
-					ZoneDeTexte.setDebut(sc.nextInt());
-					System.out.println("Fin de la selection: ");
-					ZoneDeTexte.setFin(sc.nextInt());
-
-				} catch (Exception e) {
-					System.out.println("Parametre incorrect.");
-					ZoneDeTexte.setDebut(0);
-					ZoneDeTexte.setFin(0);
-					break;
-				}
-				execAction(Client.SELECTIONNER);
-				break;
-			case -1:
-				end = true;
-				break;
-			default:
-				System.out.println("Action incorrecte.");
-				break;
-			}
-		}
-		sc.close();
-		System.out.println("Fin.");
-	}
-
-	@Override
-	public char getDerChar() {
-		return ZoneDeTexte.getDerChar();
+		setVisible(true);
 	}
 
 	public String getTexte() {
@@ -214,15 +167,10 @@ public class IHMimpl extends JFrame implements IHM
 
 	@Override
 	public void setText(String s) {
-		ZoneDeTexte.setTexte(s);		
+		txt.setText(s);
 	}
-
-	@Override
-	public void setBoutons() {
-		// TODO Auto-generated method stub
-		
+	
+	public void setZDT(String s){
+		ZoneDeTexte.setTexte(s);
 	}
-
-	
-	
 }

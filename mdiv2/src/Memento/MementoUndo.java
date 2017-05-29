@@ -2,7 +2,8 @@ package Memento;
 
 public class MementoUndo{
 	private String texte;
-
+	
+	//Les mementosUndos contiennent le texte de chaque moment
 	public MementoUndo(String newTexte){
 		this.setTexte(newTexte);
 	}
@@ -12,15 +13,5 @@ public class MementoUndo{
 	}
 	public void setTexte(String texte) {
 		this.texte = texte;
-	}
-	
-	@Override
-	public boolean equals(Object o){
-		return texte.equals(o.toString());
-	}
-	
-	@Override
-	public String toString(){
-		return texte;
 	}
 }

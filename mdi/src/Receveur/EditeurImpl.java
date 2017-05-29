@@ -4,6 +4,8 @@
 
 package Receveur;
 
+import IHM.IHM;
+
 public class EditeurImpl implements Editeur
 {
 	private PressePapier pressePapier;
@@ -14,7 +16,7 @@ public class EditeurImpl implements Editeur
 	
 	public EditeurImpl() {
 		this.buffer = new Buffer();
-		this.selection = new Selection(0,0); //au début rien n'est sélectionner
+		this.selection = new Selection(0,0);
 		this.pressePapier = new PressePapier();
 	}
 
@@ -24,19 +26,20 @@ public class EditeurImpl implements Editeur
 	}
 
 	@Override
-	public void coller() {
-		buffer.ecrire(pressePapier.getContenu(), selection);		
+	public void coller(IHM ihm) {
+		buffer.ecrire(pressePapier.getContenu(), selection);
+		ihm.setZDT(this.buffer.getTexte().toString()); 
 	}
 
 	@Override
 	public void ecrire(String s) {
-		buffer.ecrire(s, selection);
-		
+		buffer.ecrire(s, selection);	
 	}
 
 	@Override
-	public void couper() {
+	public void couper(String s) {
 		pressePapier.setContenu(buffer.getContenu(selection));	
+		buffer.ecrire(s, new Selection(0,buffer.getTexte().length()));	
 	}
 
 	@Override

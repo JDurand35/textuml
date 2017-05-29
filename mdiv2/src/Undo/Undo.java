@@ -13,6 +13,7 @@ public class Undo {
 	private IHM ihm;
 	private int current;
 	
+	//Permet de sauvegarder les versions
 	public Undo(Editeur newEdit, IHM newIhm){
 		this.editeur=newEdit;
 		this.ihm=newIhm;
@@ -27,10 +28,8 @@ public class Undo {
 	
 	private void update(){
 		String newText=version.get(current).getTexte();
-		System.out.println("update "+newText);
 		ihm.setText(newText);
 		ihm.setZDT(newText);
-		System.out.println(ihm.getTexte());
 		editeur.setContent(newText);
 	}
 	

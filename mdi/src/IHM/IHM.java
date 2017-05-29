@@ -12,15 +12,13 @@ public interface IHM
 	
 	void addBouton( String string, Action action );
 	
-	void setBoutons( );
-	
-	char getDerChar( );
-	
 	String getTexte( );
 	
 	Integer getDebut( );
 	
 	Integer getFin( );
 	
+	void setZDT(String s);
 	
+	void run();
 }

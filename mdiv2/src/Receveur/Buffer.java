@@ -10,6 +10,7 @@ public class Buffer
 	
 	private StringBuffer texte;
 	
+	//Le buffer contient ce que l'on a ecrit
 	public Buffer(){
 		texte = new StringBuffer(capacity);
 	}
@@ -22,10 +23,10 @@ public class Buffer
 		debut = (debut > texte.length()-1) ? texte.length()-1 : debut;
 		fin = (fin > texte.length()-1) ? texte.length()-1 : fin;
 
-		System.out.println("copier buffer : "+texte.substring(debut,fin));
 		return texte.substring(debut,fin);		
 	}
 	
+	//On ecrit soit au début de la string soit au niveau de la selection
 	public void ecrire(String s, Selection selection)
 	{		
 		int debut = selection.getDebut();
@@ -37,12 +38,10 @@ public class Buffer
 		}else{
 			texte.replace(debut, fin,s);
 		}
-		System.out.println("buffer ecrire " + texte);
 	}
 	
 	public StringBuffer getTexte( )
 	{
 		return texte;
 	}
-	
 }

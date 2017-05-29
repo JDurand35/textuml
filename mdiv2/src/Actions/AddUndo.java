@@ -17,7 +17,6 @@ public class AddUndo implements Action{
 	
 	@Override
 	public void execute() {
-		System.out.println("execute ADD UNDO " + ihm.getTexte());
 		undo.add(new MementoUndo(ihm.getTexte()));	
 	}
 }

@@ -6,10 +6,11 @@ package Receveur;
 
 public class Buffer
 {
-	private final int capacity = 500;
+	private final int capacity = 400;
 	
 	private StringBuffer texte;
 	
+	//Le buffer contient ce que l'on a ecrit
 	public Buffer(){
 		texte = new StringBuffer(capacity);
 	}
@@ -18,35 +19,29 @@ public class Buffer
 	{
 		int debut = selection.getDebut();
 		int fin = selection.getFin();
-		if(debut > texte.length()-1){
-			debut=texte.length()-1;
-		}
-		if(fin > texte.length()-1){
-			fin=texte.length()-1;
-		}
+		
+		debut = (debut > texte.length()-1) ? texte.length()-1 : debut;
+		fin = (fin > texte.length()-1) ? texte.length()-1 : fin;
+
 		return texte.substring(debut,fin);		
 	}
 	
+	//On ecrit soit au début de la string soit au niveau de la selection
 	public void ecrire(String s, Selection selection)
 	{		
 		int debut = selection.getDebut();
 		int fin = selection.getFin();
-		if(debut > texte.length()-1){
-			debut=texte.length()-1;
-		}
-		if(fin > texte.length()-1){
-			fin=texte.length()-1;
-		}
+		debut = (debut > texte.length()-1) ? texte.length()-1 : debut;
+		fin = (fin > texte.length()-1) ? texte.length()-1 : fin;
 		if(texte.length()==0){
 			texte.append(s);
 		}else{
-			texte.append(s, debut, fin);
-		}	
+			texte.replace(debut, fin,s);
+		}
 	}
 	
 	public StringBuffer getTexte( )
 	{
 		return texte;
 	}
-	
 }

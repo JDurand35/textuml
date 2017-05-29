@@ -16,7 +16,7 @@ public class EditeurImpl implements Editeur
 	
 	public EditeurImpl() {
 		this.buffer = new Buffer();
-		this.selection = new Selection(0,0); //au début rien n'est sélectionner
+		this.selection = new Selection(0,0);
 		this.pressePapier = new PressePapier();
 	}
 
@@ -28,7 +28,7 @@ public class EditeurImpl implements Editeur
 	@Override
 	public void coller(IHM ihm) {
 		buffer.ecrire(pressePapier.getContenu(), selection);
-		ihm.setZDT(this.buffer.getTexte().toString()); //permet de synchronise la ZDT avec le buffer (code modifié entre v1 et v2)
+		ihm.setZDT(this.buffer.getTexte().toString()); 
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class EditeurImpl implements Editeur
 	@Override
 	public void couper(String s) {
 		pressePapier.setContenu(buffer.getContenu(selection));	
-		buffer.ecrire(s, new Selection(0,buffer.getTexte().length()));		
+		buffer.ecrire(s, new Selection(0,buffer.getTexte().length()));	
 	}
 
 	@Override

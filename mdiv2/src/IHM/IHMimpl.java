@@ -50,11 +50,11 @@ public class IHMimpl extends JFrame implements IHM
 		this.actions = new HashMap<String,Action>();
 		
 		//Creation des icones a partir d image
-		BufferedImage copyIcon = ImageIO.read(new File("C:\\Users\\Johann Durand\\Desktop\\JD\\prog\\workspace\\mdiv2\\src\\Copy.png"));
-		BufferedImage pastIcon = ImageIO.read(new File("C:\\Users\\Johann Durand\\Desktop\\JD\\prog\\workspace\\mdiv2\\src\\Col.jpg"));
-		BufferedImage cutIcon = ImageIO.read(new File("C:\\Users\\Johann Durand\\Desktop\\JD\\prog\\workspace\\mdiv2\\src\\Cut.png"));
-		BufferedImage undoIcon = ImageIO.read(new File("C:\\Users\\Johann Durand\\Desktop\\JD\\prog\\workspace\\mdiv2\\src\\Undo.jpg"));
-		BufferedImage redoIcon = ImageIO.read(new File("C:\\Users\\Johann Durand\\Desktop\\JD\\prog\\workspace\\mdiv2\\src\\Redo.jpg"));
+		BufferedImage copyIcon = ImageIO.read(new File(".\\src\\Copy.png"));
+		BufferedImage pastIcon = ImageIO.read(new File(".\\src\\Col.jpg"));
+		BufferedImage cutIcon = ImageIO.read(new File(".\\src\\Cut.png"));
+		BufferedImage undoIcon = ImageIO.read(new File(".\\src\\Undo.jpg"));
+		BufferedImage redoIcon = ImageIO.read(new File(".\\src\\Redo.jpg"));
 
 		
 		JPanel container = new JPanel(new BorderLayout());
@@ -68,8 +68,7 @@ public class IHMimpl extends JFrame implements IHM
 		JButton undo = new JButton(new ImageIcon(undoIcon));
 		JButton redo = new JButton(new ImageIcon(redoIcon));
 		
-		//On ajoute des actions sur nos boutons
-	    
+		//On ajoute des actions sur nos boutons	    
 		copier.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -123,6 +122,7 @@ public class IHMimpl extends JFrame implements IHM
 		menu.add(undo);
 		menu.add(redo);
 		
+		//Permet de capturer le curseur
 		txt.addCaretListener(new CaretListener(){
 			@Override
 			public void caretUpdate(CaretEvent e) {
@@ -133,6 +133,7 @@ public class IHMimpl extends JFrame implements IHM
 			}
 		});
 		
+		//Permet de capturer les touches claviers
 		txt.addKeyListener(new KeyListener(){
 			
 			@Override
@@ -161,10 +162,9 @@ public class IHMimpl extends JFrame implements IHM
 		container.add(menu, BorderLayout.NORTH);
 		container.add(scrollTxt, BorderLayout.CENTER);
 	    this.setContentPane(container);
-	    
-		setVisible(true);
 	}
 
+	//Permet de lancer les actions
 	public void execAction(String act) {
 		actions.get(act).execute();
 	}
@@ -173,112 +173,8 @@ public class IHMimpl extends JFrame implements IHM
 	/**
 	 * Méthode permettant d'utiliser l'editeur dans la console
 	 */
-	public void runConsole() {
-		Scanner sc = new Scanner(System.in);
-		int choix = 0;
-		boolean end = false;
-
-		while(!end) {
-			String menu = "\nEtat :\n"
-					+ "Position du curseur: [" + ZoneDeTexte.getDebut() + "," + ZoneDeTexte.getFin() + "]\n"
-					+ "Texte actuel : " + ZoneDeTexte.getTexte() + "\n"
-					+ "Actions:\n"
-					+ "1: Ecrire\n"
-					+ "2: Coller\n"
-					+ "3: Copier\n"
-					+ "4: Couper\n"
-					+ "5: Undo\n"
-					+ "6: Redo\n"
-					+ "7: Sélectionner\n"
-					+ "-1: Quitter\n"
-					+ "Selectionnez un numero.";
-			System.out.println(menu);
-
-			try {
-				choix = sc.nextInt();
-			} catch (Exception e) {
-				choix = -1;
-			} 
-
-			switch (choix) {
-			case 1:
-				String newLine = "";
-				try {
-					newLine = sc.next();
-				} catch (Exception e) {
-					newLine = "";
-				}
-				String s = ZoneDeTexte.getTexte();
-				String res = "";
-				for(int i = 0; i<ZoneDeTexte.getDebut(); i++){
-					res+=s.charAt(i);
-				}
-				res+=newLine;
-				for(int i = ZoneDeTexte.getFin(); i<s.length(); i++ ){
-					res+=s.charAt(i);
-				}
-				ZoneDeTexte.setTexte(res);
-				execAction(Client.ECRIRE);
-				System.out.println("ihm : ecrire" + ZoneDeTexte.getTexte());
-				execAction(Client.ADDUNDO);
-				break;
-			case 2:
-				execAction(Client.COLLER);
-				System.out.println("ZDT COLLER : "+ZoneDeTexte.getTexte());
-				execAction(Client.ADDUNDO);
-				break;
-			case 3:
-				System.out.println("ZDT COPIER : "+ZoneDeTexte.getTexte());
-				execAction(Client.COPIER);		
-				execAction(Client.ADDUNDO);
-				break;
-			case 4:
-				String s1 = ZoneDeTexte.getTexte();
-				String res1 = "";
-				for(int i = 0; i<ZoneDeTexte.getDebut(); i++){
-					res1+=s1.charAt(i);
-				}
-				for(int i = ZoneDeTexte.getFin(); i<s1.length(); i++ ){
-					res1+=s1.charAt(i);
-				}
-				ZoneDeTexte.setTexte(res1);
-				System.out.println("ZDT COUPER : "+ZoneDeTexte.getTexte());
-				execAction(Client.COUPER);
-				execAction(Client.ADDUNDO);
-				break;
-			case 5:
-				System.out.println("test");
-				execAction(Client.UNDO);
-				break;
-			case 6:
-				execAction(Client.REDO);
-				break;
-			case 7:
-				try {
-					System.out.println("Debut de sélection: ");
-					ZoneDeTexte.setDebut(sc.nextInt());
-					System.out.println("Fin de sélection: ");
-					ZoneDeTexte.setFin(sc.nextInt());
-
-				} catch (Exception e) {				
-					ZoneDeTexte.setDebut(0);
-					ZoneDeTexte.setFin(0);
-					System.out.println("Parametres incorrectes, selection remise à (0,0).");
-					break;
-				}
-				execAction(Client.SELECTIONNER);
-				break;
-			case -1:
-				end = true;
-				break;
-			default:
-				end=true;
-				System.out.println("Mauvaise opération.");			
-				break;
-			}
-		}
-		sc.close();
-		System.out.println("Application Fermée.");
+	public void run() {
+		setVisible(true);
 	}
 
 	public String getTexte() {

@@ -4,15 +4,17 @@
 
 package Receveur;
 
+import IHM.IHM;
+
 public interface Editeur
 {
 	void copier( );
 	
-	void coller( );
+	void coller(IHM ihm);
 	
 	void ecrire(String s);
 	
-	void couper( );
+	void couper(String s); //s est la string à supprimer du buffer
 	
 	void selectionner(int debut, int fin);
 	

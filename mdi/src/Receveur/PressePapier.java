@@ -6,9 +6,10 @@ package Receveur;
 
 public class PressePapier
 {
-	private final int capacity = 500;	
+	private final int capacity = 200;	
 	private StringBuffer texte;
 	
+	// Le presse papier contient le contenu a coller
 	public PressePapier(){
 		texte = new StringBuffer(capacity);
 	}
@@ -22,19 +23,5 @@ public class PressePapier
 	{
 		texte.delete(0, texte.length());
 		texte.append(newContenu);
-	}
-	
-	public String couper( Selection selection ){
-		int debut = selection.getDebut();
-		int fin = selection.getFin();
-		if(debut > texte.length()-1){
-			debut=texte.length()-1;
-		}
-		if(fin > texte.length()-1){
-			fin=texte.length()-1;
-		}
-		
-		texte.delete(debut, fin);
-		return texte.substring(debut,fin);	
 	}
 }
